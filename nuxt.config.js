@@ -35,7 +35,8 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
+    '@nuxtjs/vuetify',
+    '@nuxtjs/pwa'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -71,5 +72,25 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  pwa: {
+    manifest: {
+      name: 'portfolio',
+      short_name: 'portfolio',
+      description: 'portfolio',
+      start_url: '/?standalone=true',
+      display: 'standalone',
+      background_color: '#ffffff'
+    },
+    workbox: {
+      // dev: true
+      // runtimeCaching: [
+      //   {
+      //     handler: 'CacheFirst',
+      //     urlPattern: '/*'
+      //   }
+      // ]
+    }
   }
 }
