@@ -42,13 +42,16 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/firebase',
+    '@nuxtjs/proxy'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/'
+    baseURL: '/',
+    proxy: true
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
@@ -84,13 +87,41 @@ export default {
       background_color: '#ffffff'
     },
     workbox: {
-      // dev: true
+      importScripts: [
+        'firebase-messaging-sw.js'
+      ],
+      dev: process.env.NODE_ENV === 'development'
       // runtimeCaching: [
       //   {
       //     handler: 'CacheFirst',
       //     urlPattern: '/*'
       //   }
       // ]
+    }
+  },
+
+  firebase: {
+    config: {
+      apiKey: 'AIzaSyDSTw8xqokcFAjOUD4-aNdTmVe_ivroNiI',
+      authDomain: 'portfolio-6ba9b.firebaseapp.com',
+      projectId: 'portfolio-6ba9b',
+      storageBucket: 'portfolio-6ba9b.appspot.com',
+      messagingSenderId: '933434969739',
+      appId: '1:933434969739:web:578a3dd196fab98a714e8e',
+      measurementId: 'G-TG4TCZXHXQ'
+    },
+    services: {
+      messaging: {
+        createServiceWorker: true,
+        fcmPublicVapidKey: 'BMP0ys3NZO2SUM2-l7d_2kpkLBHRoYYDBUqIh0sLjRodyHh2ylhf8UybFsZxzsECR27f_wWY5v9UKoRLjJ_tTP0'
+      }
+    }
+  },
+
+  proxy: {
+    '/v1/projects': {
+      target: 'https://fcm.googleapis.com',
+      changeOrigin: true
     }
   }
 }
